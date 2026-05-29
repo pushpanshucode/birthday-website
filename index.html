@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Sunidhi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;700;800;900&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background-color: #0d0d0d; font-family: 'Nunito', sans-serif; height: 100vh; overflow: hidden; }
+    .page { display: none; width: 100%; height: 100vh; justify-content: center; align-items: center; flex-direction: column; text-align: center; padding: 20px; position: relative; overflow: hidden; }
+    .page.active { display: flex; }
+
+    /* SPLASH */
+    #splash {
+      position: fixed; inset: 0; z-index: 99999;
+      background: #0d0d0d;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 18px;
+    }
+    .splash-hearts { font-size: 2.5rem; letter-spacing: 8px; animation: floatSticker 2s ease-in-out infinite alternate; }
+    .splash-name { font-family: 'Pacifico', cursive; font-size: 2.2rem; color: #FFD700; text-shadow: 0 0 30px rgba(255,215,0,0.5); }
+    .splash-sub { color: rgba(255,255,255,0.35); font-size: 0.85rem; letter-spacing: 3px; text-transform: uppercase; }
+    .splash-btn {
+      margin-top: 10px;
+      background: linear-gradient(135deg, #FFD700, #FFA500);
+      color: #0d0d0d; border: none;
+      padding: 16px 48px; border-radius: 50px;
+      font-size: 1.1rem; font-weight: 900;
+      cursor: pointer; font-family: 'Nunito', sans-serif;
+      box-shadow: 0 4px 30px rgba(255,165,0,0.4);
+      animation: splashPulse 1.5s ease infinite alternate;
+    }
+    @keyframes splashPulse { from { transform: scale(1); box-shadow: 0 4px 30px rgba(255,165,0,0.3); } to { transform: scale(1.06); box-shadow: 0 4px 40px rgba(255,165,0,0.6); } }
+    .splash-hide { animation: splashFade 0.5s ease forwards; }
+    @keyframes splashFade { to { opacity: 0; pointer-events: none; } }
+    .sticker { position: absolute; font-size: 2rem; animation: floatSticker 3s ease-in-out infinite alternate; pointer-events: none; opacity: 0.7; }
+    @keyframes floatSticker { from { transform: translateY(0) rotate(-5deg); } to { transform: translateY(-12px) rotate(5deg); } }
+    .confetti-piece { position: fixed; top: -10px; border-radius: 2px; animation: confettiFall linear forwards; z-index: 9999; pointer-events: none; }
+    @keyframes confettiFall { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(105vh) rotate(720deg); opacity: 0; } }
+    .firework { position: fixed; border-radius: 50%; animation: fireworkExplode ease-out forwards; z-index: 9999; pointer-events: none; }
+    @keyframes fireworkExplode { 0% { transform: translate(0,0) scale(1); opacity: 1; } 100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; } }
+
+    /* PASSCODE */
+    .passcode-title { font-family: 'Pacifico', cursive; font-size: 1.6rem; color: #FFD700; margin-bottom: 6px; text-shadow: 0 0 20px rgba(255,215,0,0.4); }
+    .passcode-sub { color: rgba(255,255,255,0.4); font-size: 0.8rem; margin-bottom: 25px; letter-spacing: 2px; text-transform: uppercase; }
+    .code-boxes { display: flex; gap: 12px; justify-content: center; margin-bottom: 8px; }
+    .codebox { width: 55px; height: 55px; border: 2px solid #FFD700; border-radius: 14px; color: #FFD700; font-size: 1.8rem; font-weight: 900; display: flex; align-items: center; justify-content: center; background: rgba(255,215,0,0.07); }
+    .hint-text { color: rgba(255,255,255,0.3); font-size: 0.75rem; margin-bottom: 25px; font-style: italic; }
+    .numpad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 220px; margin: 0 auto; }
+    .numkey { width: 62px; height: 62px; border-radius: 50%; border: 2px solid rgba(255,215,0,0.35); background: rgba(255,215,0,0.06); color: white; font-size: 1.3rem; font-weight: 800; cursor: pointer; transition: all 0.15s; font-family: 'Nunito', sans-serif; }
+    .numkey:hover { background: rgba(255,215,0,0.2); border-color: #FFD700; color: #FFD700; transform: scale(1.1); }
+    .numkey:active { transform: scale(0.95); }
+    .change-link { color: rgba(255,215,0,0.35); font-size: 0.72rem; margin-top: 18px; cursor: pointer; text-decoration: underline; }
+    .change-link:hover { color: #FFD700; }
+
+    /* CONGRATS */
+    .congrats-title { font-family: 'Pacifico', cursive; font-size: 2.8rem; color: #FFD700; text-shadow: 0 0 30px rgba(255,215,0,0.5); margin-bottom: 8px; letter-spacing: 2px; }
+    .congrats-name { font-family: 'Pacifico', cursive; font-size: 1.6rem; color: white; margin-bottom: 12px; }
+    .couple-frame { width: 190px; height: 190px; border-radius: 50%; border: 4px solid #FFD700; overflow: hidden; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 5rem; animation: pulseFrame 2s ease infinite alternate; }
+    @keyframes pulseFrame { from { box-shadow: 0 0 0 8px rgba(255,215,0,0.08), 0 0 30px rgba(255,215,0,0.2); } to { box-shadow: 0 0 0 12px rgba(255,215,0,0.12), 0 0 50px rgba(255,215,0,0.35); } }
+    .couple-frame img { width: 100%; height: 100%; object-fit: cover; }
+    .today-text { font-family: 'Pacifico', cursive; font-size: 1.3rem; color: rgba(255,255,255,0.75); margin-bottom: 22px; }
+
+    /* GIFT */
+    .gift-title { font-family: 'Pacifico', cursive; font-size: 1.9rem; color: white; margin-bottom: 6px; }
+    .gift-sub { color: rgba(255,255,255,0.45); font-size: 0.95rem; margin-bottom: 25px; }
+    .gift-emoji { font-size: 100px; display: block; margin-bottom: 30px; animation: giftFloat 2s ease-in-out infinite alternate; filter: drop-shadow(0 0 25px rgba(255,215,0,0.45)); }
+    @keyframes giftFloat { from { transform: translateY(0) rotate(-4deg); } to { transform: translateY(-18px) rotate(4deg); } }
+
+    /* PRETTY PLEASE */
+    .pp-char { font-size: 110px; margin-bottom: 10px; display: block; animation: ppBounce 0.9s ease infinite alternate; }
+    @keyframes ppBounce { from { transform: translateY(0); } to { transform: translateY(-14px); } }
+    .pp-title { font-family: 'Pacifico', cursive; font-size: 2.2rem; color: white; margin-bottom: 8px; }
+    .pp-sub { color: rgba(255,255,255,0.4); font-size: 0.85rem; margin-bottom: 25px; }
+
+    /* WISH */
+    .wish-title { font-family: 'Pacifico', cursive; font-size: 2.2rem; color: white; margin-bottom: 5px; }
+    .wish-sub { color: rgba(255,215,0,0.6); font-size: 0.85rem; margin-bottom: 20px; }
+    .candles { font-size: 2.8rem; display: block; margin-bottom: 0; letter-spacing: 4px; animation: candleFlicker 0.5s ease infinite alternate; }
+    @keyframes candleFlicker { from { filter: drop-shadow(0 0 8px rgba(255,140,0,0.6)); } to { filter: drop-shadow(0 0 15px rgba(255,140,0,0.9)); } }
+    .cake-emoji { font-size: 110px; display: block; margin-bottom: 20px; animation: cakeWiggle 2s ease infinite alternate; }
+    @keyframes cakeWiggle { from { transform: rotate(-2deg); } to { transform: rotate(2deg); } }
+
+    /* CHOOSE GIFT */
+    .choose-title { font-family: 'Pacifico', cursive; font-size: 2rem; color: white; margin-bottom: 5px; }
+    .choose-sub { color: rgba(255,255,255,0.4); font-size: 0.85rem; margin-bottom: 25px; }
+    .gift-options { display: flex; gap: 22px; justify-content: center; margin-bottom: 12px; }
+    .gift-option { width: 110px; border-radius: 24px; border: 2px solid rgba(255,215,0,0.35); background: rgba(255,215,0,0.06); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px 10px; cursor: pointer; transition: all 0.2s; gap: 8px; }
+    .gift-option:hover { background: rgba(255,215,0,0.15); border-color: #FFD700; transform: scale(1.1); box-shadow: 0 0 25px rgba(255,215,0,0.25); }
+    .gift-option .icon { font-size: 3rem; }
+    .gift-option .label { color: rgba(255,255,255,0.6); font-size: 0.72rem; letter-spacing: 1px; }
+    .please-last { color: rgba(255,255,255,0.2); font-size: 0.75rem; margin-top: 8px; font-style: italic; }
+
+    /* GIFT REVEAL */
+    .reveal-page { background: #0d0d0d; }
+    .reveal-photo { width: 280px; height: 350px; object-fit: cover; border-radius: 16px; border: 3px solid rgba(255,215,0,0.4); box-shadow: 0 0 40px rgba(255,215,0,0.15); margin-bottom: 20px; }
+    .reveal-caption { font-family: 'Pacifico', cursive; font-size: 1.2rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+
+    /* MEMORIES — fixed layout, no scroll */
+    #page7 {
+      display: none;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+      padding: 12px 16px;
+    }
+    #page7.active { display: flex; }
+    .memory-title { font-family: 'Pacifico', cursive; font-size: 1.4rem; color: white; margin-bottom: 10px; flex-shrink: 0; }
+
+    /* Carousel wrapper */
+    .mem-carousel-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+    .mem-track {
+      display: flex;
+      transition: transform 0.4s ease;
+      width: 100%;
+      height: 100%;
+    }
+    .mem-slide {
+      min-width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 0 10px;
+    }
+    .mem-slide img {
+      max-height: 58vh;
+      max-width: 80vw;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 14px;
+      border: 2px solid rgba(255,215,0,0.35);
+      box-shadow: 0 0 30px rgba(255,215,0,0.15);
+    }
+    .mem-caption {
+      font-family: 'Pacifico', cursive;
+      font-size: 1rem;
+      color: rgba(255,255,255,0.7);
+      margin-top: 12px;
+      font-style: italic;
+    }
+    .mem-counter {
+      font-size: 0.75rem;
+      color: rgba(255,215,0,0.4);
+      margin-top: 6px;
+      letter-spacing: 2px;
+    }
+    .mem-nav {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 12px;
+      flex-shrink: 0;
+    }
+
+    /* LETTER */
+    .letter-page { justify-content: flex-start; padding-top: 20px; overflow-y: auto; }
+    .letter-title { font-family: 'Pacifico', cursive; font-size: 1.6rem; color: white; margin-bottom: 12px; }
+    .letter-main-wrapper { display: flex; gap: 14px; align-items: flex-start; max-width: 760px; margin: 0 auto 15px; width: 100%; }
+    .shayari-paper { width: 185px; flex-shrink: 0; background: #f5f0e8; border-radius: 4px; padding: 18px 12px; box-shadow: 3px 3px 12px rgba(0,0,0,0.6); transform: rotate(-3deg); position: relative; }
+    .shayari-paper::before { content: ''; position: absolute; top: 0; left: 28px; width: 1px; height: 100%; background: rgba(255,100,100,0.3); }
+    .shayari-paper::after { content: '📎'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); font-size: 1.4rem; }
+    .shayari-heartline { text-align: center; font-size: 0.85rem; color: #555; margin-bottom: 10px; }
+    .shayari-text { font-family: 'Kalam', cursive; font-size: 0.78rem; color: #333; line-height: 2; text-align: center; }
+    .letter-box { background: #141414; border: 1px solid rgba(255,215,0,0.25); border-top: 3px solid #FFD700; border-radius: 14px; padding: 20px; text-align: left; color: rgba(255,255,255,0.78); font-size: 0.88rem; line-height: 1.9; flex: 1; position: relative; }
+    .letter-box::before { content: '📌'; position: absolute; top: -18px; left: 18px; font-size: 1.4rem; }
+    .letter-photos { display: flex; flex-direction: column; gap: 10px; width: 120px; flex-shrink: 0; }
+    .letter-photo { background: #1c1c1c; border: 1px solid rgba(255,215,0,0.15); border-radius: 10px; padding: 5px 5px 20px 5px; box-shadow: 4px 4px 15px rgba(0,0,0,0.6); }
+    .letter-photo:nth-child(odd) { transform: rotate(3deg); }
+    .letter-photo:nth-child(even) { transform: rotate(-3deg); }
+    .letter-photo img { width: 100%; height: 85px; object-fit: cover; border-radius: 6px; display: block; }
+
+    /* BUTTONS */
+    .btn-gold { background: linear-gradient(135deg, #FFD700, #FFA500); color: #0d0d0d; border: none; padding: 13px 36px; border-radius: 50px; font-size: 1rem; font-weight: 900; cursor: pointer; font-family: 'Nunito', sans-serif; box-shadow: 0 4px 20px rgba(255,165,0,0.35); transition: all 0.2s; }
+    .btn-gold:hover { transform: scale(1.07); }
+    .btn-gold:active { transform: scale(0.97); }
+    .btn-outline { background: transparent; color: rgba(255,255,255,0.8); border: 2px solid rgba(255,255,255,0.3); padding: 13px 36px; border-radius: 50px; font-size: 1rem; font-weight: 700; cursor: pointer; font-family: 'Nunito', sans-serif; transition: all 0.2s; }
+    .btn-outline:hover { border-color: white; color: white; transform: scale(1.05); }
+    .btn-green { background: linear-gradient(135deg, #2ecc71, #27ae60); color: white; border: none; padding: 13px 36px; border-radius: 50px; font-size: 1rem; font-weight: 900; cursor: pointer; font-family: 'Nunito', sans-serif; transition: all 0.2s; }
+    .btn-green:hover { transform: scale(1.06); }
+    .btn-row { display: flex; gap: 15px; justify-content: center; }
+    .btn-small { padding: 10px 25px; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+
+  <!-- PAGE 1: PASSCODE -->
+  <div id="page1" class="page active">
+    <span class="sticker" style="top:8%;left:5%;">🌟</span>
+    <span class="sticker" style="top:15%;right:8%;animation-delay:.5s;font-size:1.5rem;">✨</span>
+    <span class="sticker" style="bottom:12%;left:8%;animation-delay:1s;">⭐</span>
+    <span class="sticker" style="bottom:20%;right:6%;animation-delay:.3s;font-size:1.5rem;">💛</span>
+    <span class="sticker" style="top:40%;left:3%;animation-delay:.8s;font-size:1.3rem;">🖤</span>
+    <span class="sticker" style="top:40%;right:3%;animation-delay:.2s;font-size:1.3rem;">✨</span>
+    <p class="passcode-title" id="passcodeTitle">🔒 Enter Passcode</p>
+    <p class="passcode-sub" id="passcodeSub">unlock your surprise</p>
+    <div class="code-boxes">
+      <div class="codebox" id="b1"></div>
+      <div class="codebox" id="b2"></div>
+      <div class="codebox" id="b3"></div>
+      <div class="codebox" id="b4"></div>
+    </div>
+    <p class="hint-text" id="hintText">hint: its are fav code ✨</p>
+    <div class="numpad">
+      <button class="numkey" onclick="pressKey('1')">1</button>
+      <button class="numkey" onclick="pressKey('2')">2</button>
+      <button class="numkey" onclick="pressKey('3')">3</button>
+      <button class="numkey" onclick="pressKey('4')">4</button>
+      <button class="numkey" onclick="pressKey('5')">5</button>
+      <button class="numkey" onclick="pressKey('6')">6</button>
+      <button class="numkey" onclick="pressKey('7')">7</button>
+      <button class="numkey" onclick="pressKey('8')">8</button>
+      <button class="numkey" onclick="pressKey('9')">9</button>
+      <button class="numkey" onclick="pressKey('*')">*</button>
+      <button class="numkey" onclick="pressKey('0')">0</button>
+      <button class="numkey" onclick="deleteKey()">⌫</button>
+    </div>
+    <p class="change-link" onclick="changePasscode()">change passcode?</p>
+  </div>
+
+  <!-- PAGE 2: CONGRATULATIONS -->
+  <div id="page2" class="page">
+    <span class="sticker" style="top:5%;left:5%;">🎊</span>
+    <span class="sticker" style="top:5%;right:5%;animation-delay:.4s;">🎉</span>
+    <span class="sticker" style="top:20%;left:3%;font-size:1.5rem;animation-delay:.8s;">⭐</span>
+    <span class="sticker" style="top:20%;right:3%;font-size:1.5rem;animation-delay:.2s;">🌟</span>
+    <span class="sticker" style="bottom:15%;left:6%;animation-delay:.6s;">✨</span>
+    <span class="sticker" style="bottom:15%;right:6%;animation-delay:1s;">🎀</span>
+    <p style="font-size:1.8rem;letter-spacing:10px;margin-bottom:10px;animation:floatSticker 2s ease infinite alternate;">✨⭐✨⭐✨</p>
+    <h1 class="congrats-title">CONGRATULATIONS</h1>
+    <p class="congrats-name">Sunidhi 🖤</p>
+    <div class="couple-frame"><img src="couple.jpg" alt="couple"></div>
+    <p class="today-text">Today is your day, Sunidhi 🖤</p>
+    <button class="btn-gold" onclick="showPage('page3')">Open Your Gift 🎁</button>
+  </div>
+
+  <!-- PAGE 3: GIFT YES/NO -->
+  <div id="page3" class="page">
+    <span class="sticker" style="top:8%;left:5%;">🎁</span>
+    <span class="sticker" style="top:8%;right:5%;animation-delay:.5s;">🎀</span>
+    <span class="sticker" style="bottom:10%;left:5%;animation-delay:.3s;">✨</span>
+    <span class="sticker" style="bottom:10%;right:5%;animation-delay:.8s;">🌟</span>
+    <h1 class="gift-title">Happy Birthday, Sunidhi 🖤</h1>
+    <p class="gift-sub">do you wanna open your gift?</p>
+    <span class="gift-emoji">🎁</span>
+    <div class="btn-row">
+      <button class="btn-green" onclick="showPage('page5')">✅ YES</button>
+      <button class="btn-outline" onclick="showPage('page4')">❌ NO</button>
+    </div>
+  </div>
+
+  <!-- PAGE 4: PRETTY PLEASE -->
+  <div id="page4" class="page">
+    <span class="sticker" style="top:10%;left:8%;animation-delay:.2s;">😢</span>
+    <span class="sticker" style="top:10%;right:8%;animation-delay:.6s;">💧</span>
+    <span class="sticker" style="bottom:12%;left:8%;animation-delay:.4s;">🥺</span>
+    <span class="sticker" style="bottom:12%;right:8%;animation-delay:.9s;">💔</span>
+    <span class="pp-char">🥺</span>
+    <h1 class="pp-title">pretty please, Sunidhi...</h1>
+    <p class="pp-sub">come on, don't say no 🥺</p>
+    <button class="btn-outline" onclick="showPage('page3')">TRY AGAIN</button>
+  </div>
+
+  <!-- PAGE 5: MAKE A WISH -->
+  <div id="page5" class="page">
+    <span class="sticker" style="top:8%;left:5%;">⭐</span>
+    <span class="sticker" style="top:8%;right:5%;animation-delay:.4s;">✨</span>
+    <span class="sticker" style="bottom:12%;left:6%;animation-delay:.7s;">🌟</span>
+    <span class="sticker" style="bottom:12%;right:6%;animation-delay:.2s;">💫</span>
+    <h1 class="wish-title">Make a wish, Sunidhi ✨</h1>
+    <p class="wish-sub">close your eyes first... 👀</p>
+    <span id="candles" class="candles">🕯️🕯️🕯️🕯️🕯️🕯️</span>
+    <span class="cake-emoji">🎂</span>
+    <button class="btn-outline" onclick="blowCandles()">BLOW 💨</button>
+  </div>
+
+  <!-- PAGE 6: CHOOSE A GIFT -->
+  <div id="page6" class="page">
+    <span class="sticker" style="top:8%;left:5%;">🐱</span>
+    <span class="sticker" style="top:8%;right:5%;animation-delay:.5s;">🌟</span>
+    <span class="sticker" style="bottom:10%;left:5%;animation-delay:.3s;">✨</span>
+    <span class="sticker" style="bottom:10%;right:5%;animation-delay:.8s;">💛</span>
+    <h1 class="choose-title">These are for you, Sunidhi 🖤</h1>
+    <p class="choose-sub">choose one to open ✨</p>
+    <div class="gift-options">
+      <div class="gift-option" onclick="showPage('page6a')">
+        <span class="icon">📷</span>
+        <span class="label">MEMORIES</span>
+      </div>
+      <div class="gift-option" onclick="showPage('page6b')">
+        <span class="icon">🍶</span>
+        <span class="label">MOMENTS</span>
+      </div>
+      <div class="gift-option" onclick="showPage('page6c')">
+        <span class="icon">⭐</span>
+        <span class="label">SPECIAL</span>
+      </div>
+    </div>
+    <p class="please-last">↗️ please open me last</p>
+  </div>
+
+  <!-- PAGE 6A: GIFT REVEAL 1 (Camera) -->
+  <div id="page6a" class="page reveal-page">
+    <span class="sticker" style="top:5%;left:5%;">📷</span>
+    <span class="sticker" style="top:5%;right:5%;animation-delay:.4s;">✨</span>
+    <img src="gift1.jpg" alt="gift" class="reveal-photo">
+    <p class="reveal-caption">you look beautiful, always 🖤</p>
+    <div class="btn-row">
+      <button class="btn-outline btn-small" onclick="showPage('page6')">← Back</button>
+      <button class="btn-gold btn-small" onclick="showPage('page7')">Next →</button>
+    </div>
+  </div>
+
+  <!-- PAGE 6B: GIFT REVEAL 2 (Bottle) -->
+  <div id="page6b" class="page reveal-page">
+    <span class="sticker" style="top:5%;left:5%;">🍶</span>
+    <span class="sticker" style="top:5%;right:5%;animation-delay:.4s;">✨</span>
+    <img src="gift2.jpg" alt="gift" class="reveal-photo">
+    <p class="reveal-caption">every moment with you is golden ✨</p>
+    <div class="btn-row">
+      <button class="btn-outline btn-small" onclick="showPage('page6')">← Back</button>
+      <button class="btn-gold btn-small" onclick="showPage('page7')">Next →</button>
+    </div>
+  </div>
+
+  <!-- PAGE 6C: GIFT REVEAL 3 (Star) -->
+  <div id="page6c" class="page reveal-page">
+    <span class="sticker" style="top:5%;left:5%;">⭐</span>
+    <span class="sticker" style="top:5%;right:5%;animation-delay:.4s;">🌟</span>
+    <img src="gift3.jpg" alt="gift" class="reveal-photo">
+    <p class="reveal-caption">tum ho toh sab kuch hai 🖤</p>
+    <div class="btn-row">
+      <button class="btn-outline btn-small" onclick="showPage('page6')">← Back</button>
+      <button class="btn-gold btn-small" onclick="showPage('page7')">Next →</button>
+    </div>
+  </div>
+
+  <!-- PAGE 7: MEMORIES — carousel style -->
+  <div id="page7" class="page">
+    <span class="sticker" style="top:2%;left:4%;font-size:1.4rem;">📸</span>
+    <span class="sticker" style="top:2%;right:4%;font-size:1.4rem;animation-delay:.5s;">🌟</span>
+    <h1 class="memory-title">Our Memories, Sunidhi 🖤</h1>
+
+    <div class="mem-carousel-wrap">
+      <div class="mem-track" id="memTrack">
+        <div class="mem-slide">
+          <img src="photo1.jpg" alt="memory">
+          <p class="mem-caption">I love how goofy you are 😄</p>
+        </div>
+        <div class="mem-slide">
+          <img src="photo2.jpg" alt="memory">
+          <p class="mem-caption">Best birthday ever 🎂</p>
+        </div>
+        <div class="mem-slide">
+          <img src="photo3.jpg" alt="memory">
+          <p class="mem-caption">Always smiling 😊</p>
+        </div>
+        <div class="mem-slide">
+          <img src="photo4.jpg" alt="memory">
+          <p class="mem-caption">But most of all, I love you for being you 🖤</p>
+        </div>
+        <div class="mem-slide">
+          <img src="photo5.jpg" alt="memory">
+          <p class="mem-caption">Har pal yaadgaar hai 🌟</p>
+        </div>
+        <div class="mem-slide">
+          <img src="photo6.jpg" alt="memory">
+          <p class="mem-caption">Itni sundar lagti ho ✨</p>
+        </div>
+        <div class="mem-slide">
+          <img src="photo7.jpg" alt="memory">
+          <p class="mem-caption">Healing vibes only 🖤</p>
+        </div>
+        <div class="mem-slide">
+          <img src="photo8.jpg" alt="memory">
+          <p class="mem-caption">My favourite person 💛</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="mem-counter" id="memCounter">1 / 8</p>
+
+    <div class="mem-nav">
+      <button class="btn-outline btn-small" id="memBack" onclick="memNav(-1)">← Back</button>
+      <button class="btn-gold btn-small" id="memNext" onclick="memNav(1)">Next →</button>
+    </div>
+  </div>
+
+  <!-- PAGE 8: LETTER -->
+  <div id="page8" class="page letter-page">
+    <span class="sticker" style="top:1%;left:3%;font-size:1.2rem;">💌</span>
+    <span class="sticker" style="top:1%;right:3%;font-size:1.2rem;animation-delay:.5s;">🖤</span>
+    <h2 class="letter-title">💌 A letter for you, Sunidhi</h2>
+    <div class="letter-main-wrapper">
+      <div class="shayari-paper">
+        <p class="shayari-heartline">—♥ love ♥—</p>
+        <p class="shayari-text">Dil mein basi<br>teri yaad ki mehak,<br>Har saans mein<br>tera naam likha hai.<br><br>Tu door hai<br>par itna kareeb,<br>Har pal tera hi<br>paigaam likha hai.</p>
+      </div>
+      <div class="letter-box">
+        Happy Birthday, Sunidhi! On this special day, I want you to know how deeply you are cherished. You've filled my life with so much happiness and warmth, and I'm beyond grateful to have you by my side.
+        <br><br>
+        You make every day brighter just by being yourself, and I feel so lucky to know someone as incredible as you. I hope your birthday is as beautiful as you are, and that every dream you carry comes true.
+        <br><br>
+        You mean more to me than words can ever say. 🖤
+      </div>
+      <div class="letter-photos">
+        <div class="letter-photo"><img src="letter1.jpg" alt="photo"></div>
+        <div class="letter-photo"><img src="letter2.jpg" alt="photo"></div>
+        <div class="letter-photo"><img src="letter3.jpg" alt="photo"></div>
+      </div>
+    </div>
+    <button class="btn-gold" onclick="showPage('page1')">🔄 Start Again</button>
+  </div>
+
+  <!-- Background Audio -->
+  <audio id="bgAudio" src="song.mp3" preload="auto"></audio>
+
+  <script>
+    var songStarted = false;
+    function startSong() {
+      if (songStarted) return;
+      songStarted = true;
+      document.getElementById('bgAudio').play();
+    }
+
+    function splashGo() {
+      startSong();
+      var el = document.getElementById('splash');
+      el.classList.add('splash-hide');
+      setTimeout(function() { el.style.display = 'none'; }, 500);
+    }
+
+    let code = [];
+    let savedCode = localStorage.getItem('birthdayPasscode');
+    let isSettingCode = false;
+
+    if (!savedCode) {
+      isSettingCode = true;
+      document.getElementById('passcodeTitle').innerText = '🔒 Set Your Passcode';
+      document.getElementById('passcodeSub').innerText = 'choose a 4-digit code';
+      document.getElementById('hintText').innerText = 'choose wisely 😊';
+    }
+
+    function pressKey(num) {
+      startSong(); // browser allows autoplay after user interaction
+      if (code.length < 4) {
+        code.push(num);
+        updateBoxes();
+        if (code.length === 4) setTimeout(() => { if (isSettingCode) setNewCode(); else checkCode(); }, 200);
+      }
+    }
+
+    function deleteKey() { code.pop(); updateBoxes(); }
+
+    function updateBoxes() {
+      for (let i = 1; i <= 4; i++) document.getElementById('b' + i).innerText = code[i-1] ? '●' : '';
+    }
+
+    function setNewCode() {
+      localStorage.setItem('birthdayPasscode', code.join(''));
+      savedCode = code.join('');
+      isSettingCode = false;
+      code = [];
+      updateBoxes();
+      document.getElementById('passcodeTitle').innerText = '🔒 Enter Passcode';
+      document.getElementById('passcodeSub').innerText = 'unlock your surprise';
+      document.getElementById('hintText').innerText = 'hint: its are fav code ✨';
+      alert('✅ Passcode set! Ab enter karo.');
+    }
+
+    function checkCode() {
+      if (code.join('') === savedCode) {
+        code = []; updateBoxes(); launchConfetti();
+        setTimeout(() => showPage('page2'), 800);
+      } else {
+        code = []; updateBoxes(); alert("Wrong code! Try again 🖤");
+      }
+    }
+
+    function changePasscode() {
+      if (confirm("Passcode change karna chahte ho?")) {
+        localStorage.removeItem('birthdayPasscode');
+        savedCode = null; isSettingCode = true; code = []; updateBoxes();
+        document.getElementById('passcodeTitle').innerText = '🔒 Set New Passcode';
+        document.getElementById('passcodeSub').innerText = 'choose a new 4-digit code';
+        document.getElementById('hintText').innerText = 'choose wisely 😊';
+      }
+    }
+
+    function launchConfetti() {
+      const colors = ['#FFD700','#FFA500','#ffffff','#fffacd','#FFC300'];
+      for (let i = 0; i < 120; i++) {
+        setTimeout(() => {
+          const p = document.createElement('div');
+          p.classList.add('confetti-piece');
+          p.style.left = Math.random() * 100 + 'vw';
+          p.style.background = colors[Math.floor(Math.random() * colors.length)];
+          p.style.width = (Math.random() * 8 + 6) + 'px';
+          p.style.height = p.style.width;
+          p.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+          p.style.animationDuration = (Math.random() * 2 + 2) + 's';
+          document.body.appendChild(p);
+          setTimeout(() => p.remove(), 4000);
+        }, i * 15);
+      }
+    }
+
+    function launchFireworks() {
+      const colors = ['#FFD700','#FFA500','#ffffff','#fffacd'];
+      let count = 0;
+      const iv = setInterval(() => {
+        if (count >= 8) { clearInterval(iv); return; }
+        count++;
+        const x = Math.random() * window.innerWidth;
+        const y = Math.random() * (window.innerHeight * 0.6) + 50;
+        for (let i = 0; i < 20; i++) {
+          const s = document.createElement('div');
+          s.classList.add('firework');
+          const angle = (i / 20) * 360;
+          const dist = Math.random() * 80 + 40;
+          s.style.left = x + 'px'; s.style.top = y + 'px';
+          s.style.background = colors[Math.floor(Math.random() * colors.length)];
+          s.style.setProperty('--tx', Math.cos(angle * Math.PI / 180) * dist + 'px');
+          s.style.setProperty('--ty', Math.sin(angle * Math.PI / 180) * dist + 'px');
+          s.style.animationDuration = (Math.random() * 0.5 + 0.5) + 's';
+          s.style.width = (Math.random() * 4 + 4) + 'px';
+          s.style.height = s.style.width;
+          document.body.appendChild(s);
+          setTimeout(() => s.remove(), 1200);
+        }
+      }, 400);
+    }
+
+    function blowCandles() {
+      document.getElementById('candles').innerText = '🌬️💨💨';
+      setTimeout(() => {
+        document.getElementById('candles').innerText = '✨ Wish made! ✨';
+        setTimeout(() => showPage('page6'), 1500);
+      }, 800);
+    }
+
+    // MEMORY CAROUSEL
+    let memIdx = 0;
+    const memTotal = 8;
+
+    function memNav(dir) {
+      const newIdx = memIdx + dir;
+      if (newIdx < 0) return;
+      if (newIdx >= memTotal) {
+        showPage('page8');
+        return;
+      }
+      memIdx = newIdx;
+      document.getElementById('memTrack').style.transform = `translateX(-${memIdx * 100}%)`;
+      document.getElementById('memCounter').innerText = `${memIdx + 1} / ${memTotal}`;
+      document.getElementById('memBack').innerText = memIdx === 0 ? '← Back' : '← Prev';
+      document.getElementById('memNext').innerText = memIdx === memTotal - 1 ? 'Next →' : 'Next →';
+    }
+
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      if (id === 'page7') {
+        memIdx = 0;
+        document.getElementById('memTrack').style.transform = 'translateX(0)';
+        document.getElementById('memCounter').innerText = '1 / 8';
+      }
+      if (id === 'page8') setTimeout(() => launchFireworks(), 500);
+    }
+  </script>
+  <!-- SPLASH SCREEN -->
+  <div id="splash">
+    <span class="splash-hearts">🖤✨🖤</span>
+    <p class="splash-name">For Sunidhi 🖤</p>
+    <p class="splash-sub">something special awaits</p>
+    <button class="splash-btn" onclick="splashGo()">Tap to Open 💛</button>
+  </div>
+
+</body>
+</html>
