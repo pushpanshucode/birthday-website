@@ -102,8 +102,8 @@
       display: none;
       flex-direction: column;
       height: 100vh;
-      overflow: hidden;
-      padding: 12px 16px;
+      overflow: visible;
+      padding: 12px 16px 16px;
     }
     #page7.active { display: flex; }
     .memory-title { font-family: 'Pacifico', cursive; font-size: 1.4rem; color: white; margin-bottom: 10px; flex-shrink: 0; }
@@ -223,14 +223,15 @@
       .gift-option .icon { font-size: 2.2rem; }
 
       /* GIFT REVEAL */
-      .reveal-photo { width: 85vw; height: 55vw; margin-bottom: 14px; }
+      .reveal-photo { width: 88vw; height: auto; max-height: 55vh; margin-bottom: 14px; }
       .reveal-caption { font-size: 1rem; margin-bottom: 14px; }
 
       /* MEMORY CAROUSEL */
-      .memory-title { font-size: 1.1rem; margin-bottom: 8px; }
-      .mem-slide img { max-height: 52vh; max-width: 88vw; }
-      .mem-caption { font-size: 0.85rem; margin-top: 8px; }
-      .mem-counter { font-size: 0.7rem; margin-top: 4px; }
+      .memory-title { font-size: 1.1rem; margin-bottom: 6px; }
+      .mem-slide img { max-height: 55vh; max-width: 88vw; }
+      .mem-caption { font-size: 0.85rem; margin-top: 6px; }
+      .mem-counter { font-size: 0.7rem; margin-top: 2px; }
+      .mem-nav { margin-top: 8px; padding-bottom: 10px; }
 
       /* LETTER */
       .letter-page { padding-top: 12px; padding-bottom: 20px; }
