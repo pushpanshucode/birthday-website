@@ -182,45 +182,76 @@
 
     /* MOBILE FIXES */
     @media (max-width: 600px) {
-      /* Congrats title — fit on one line */
-      .congrats-title { font-size: 1.8rem; letter-spacing: 0; }
-      .congrats-name { font-size: 1.2rem; }
-      .couple-frame { width: 150px; height: 150px; }
-      .today-text { font-size: 1rem; }
 
-      /* Letter page — stack vertically on mobile */
+      /* PASSCODE */
+      .passcode-title { font-size: 1.3rem; }
+      .passcode-sub { margin-bottom: 16px; }
+      .codebox { width: 48px; height: 48px; font-size: 1.5rem; border-radius: 10px; }
+      .code-boxes { gap: 10px; margin-bottom: 6px; }
+      .hint-text { margin-bottom: 16px; font-size: 0.7rem; }
+      .numpad { gap: 10px; max-width: 200px; }
+      .numkey { width: 56px; height: 56px; font-size: 1.1rem; }
+      .change-link { margin-top: 12px; }
+
+      /* CONGRATS */
+      .congrats-title { font-size: 1.8rem; letter-spacing: 0; }
+      .congrats-name { font-size: 1.2rem; margin-bottom: 8px; }
+      .couple-frame { width: 150px; height: 150px; margin-bottom: 12px; }
+      .today-text { font-size: 1rem; margin-bottom: 16px; }
+
+      /* GIFT YES/NO */
+      .gift-title { font-size: 1.4rem; }
+      .gift-sub { font-size: 0.85rem; margin-bottom: 16px; }
+      .gift-emoji { font-size: 75px; margin-bottom: 20px; }
+
+      /* PRETTY PLEASE */
+      .pp-char { font-size: 80px; margin-bottom: 8px; }
+      .pp-title { font-size: 1.6rem; }
+      .pp-sub { font-size: 0.8rem; margin-bottom: 18px; }
+
+      /* WISH / CAKE */
+      .wish-title { font-size: 1.6rem; }
+      .wish-sub { font-size: 0.8rem; margin-bottom: 14px; }
+      .cake-emoji { font-size: 80px; margin-bottom: 14px; }
+      .candles { font-size: 2rem; }
+
+      /* CHOOSE GIFT */
+      .choose-title { font-size: 1.4rem; }
+      .choose-sub { font-size: 0.8rem; margin-bottom: 16px; }
+      .gift-options { gap: 12px; }
+      .gift-option { width: 88px; padding: 12px 8px; border-radius: 18px; }
+      .gift-option .icon { font-size: 2.2rem; }
+
+      /* GIFT REVEAL */
+      .reveal-photo { width: 85vw; height: 55vw; margin-bottom: 14px; }
+      .reveal-caption { font-size: 1rem; margin-bottom: 14px; }
+
+      /* MEMORY CAROUSEL */
+      .memory-title { font-size: 1.1rem; margin-bottom: 8px; }
+      .mem-slide img { max-height: 52vh; max-width: 88vw; }
+      .mem-caption { font-size: 0.85rem; margin-top: 8px; }
+      .mem-counter { font-size: 0.7rem; margin-top: 4px; }
+
+      /* LETTER */
       .letter-page { padding-top: 12px; padding-bottom: 20px; }
       .letter-title { font-size: 1.1rem; margin-bottom: 10px; }
-      .letter-main-wrapper {
-        flex-direction: column;
-        align-items: center;
-        gap: 14px;
-      }
-      .shayari-paper {
-        width: 90%;
-        transform: rotate(-1deg);
-      }
-      .letter-box {
-        width: 90%;
-        font-size: 0.82rem;
-        line-height: 1.7;
-        padding: 16px;
-      }
-      /* Photos horizontal row on mobile */
-      .letter-photos {
-        flex-direction: row;
-        width: 90%;
-        justify-content: center;
-        gap: 10px;
-      }
-      .letter-photo {
-        width: 30%;
-        padding: 4px 4px 16px 4px;
-      }
+      .letter-main-wrapper { flex-direction: column; align-items: center; gap: 14px; }
+      .shayari-paper { width: 90%; transform: rotate(-1deg); }
+      .letter-box { width: 90%; font-size: 0.82rem; line-height: 1.7; padding: 16px; }
+      .letter-photos { flex-direction: row; width: 90%; justify-content: center; gap: 10px; }
+      .letter-photo { width: 30%; padding: 4px 4px 16px 4px; }
       .letter-photo img { height: 70px; }
       .letter-photo:nth-child(odd) { transform: rotate(2deg); }
       .letter-photo:nth-child(even) { transform: rotate(-2deg); }
+
+      /* BUTTONS */
+      .btn-gold { padding: 11px 28px; font-size: 0.9rem; }
+      .btn-outline { padding: 11px 28px; font-size: 0.9rem; }
+      .btn-green { padding: 11px 28px; font-size: 0.9rem; }
+      .btn-small { padding: 9px 20px; font-size: 0.8rem; }
     }
+
+    
 
     /* BUTTONS */
     .btn-gold { background: linear-gradient(135deg, #FFD700, #FFA500); color: #0d0d0d; border: none; padding: 13px 36px; border-radius: 50px; font-size: 1rem; font-weight: 900; cursor: pointer; font-family: 'Nunito', sans-serif; box-shadow: 0 4px 20px rgba(255,165,0,0.35); transition: all 0.2s; }
