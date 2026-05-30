@@ -180,6 +180,48 @@
     .letter-photo:nth-child(even) { transform: rotate(-3deg); }
     .letter-photo img { width: 100%; height: 85px; object-fit: cover; border-radius: 6px; display: block; }
 
+    /* MOBILE FIXES */
+    @media (max-width: 600px) {
+      /* Congrats title — fit on one line */
+      .congrats-title { font-size: 1.8rem; letter-spacing: 0; }
+      .congrats-name { font-size: 1.2rem; }
+      .couple-frame { width: 150px; height: 150px; }
+      .today-text { font-size: 1rem; }
+
+      /* Letter page — stack vertically on mobile */
+      .letter-page { padding-top: 12px; padding-bottom: 20px; }
+      .letter-title { font-size: 1.1rem; margin-bottom: 10px; }
+      .letter-main-wrapper {
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+      }
+      .shayari-paper {
+        width: 90%;
+        transform: rotate(-1deg);
+      }
+      .letter-box {
+        width: 90%;
+        font-size: 0.82rem;
+        line-height: 1.7;
+        padding: 16px;
+      }
+      /* Photos horizontal row on mobile */
+      .letter-photos {
+        flex-direction: row;
+        width: 90%;
+        justify-content: center;
+        gap: 10px;
+      }
+      .letter-photo {
+        width: 30%;
+        padding: 4px 4px 16px 4px;
+      }
+      .letter-photo img { height: 70px; }
+      .letter-photo:nth-child(odd) { transform: rotate(2deg); }
+      .letter-photo:nth-child(even) { transform: rotate(-2deg); }
+    }
+
     /* BUTTONS */
     .btn-gold { background: linear-gradient(135deg, #FFD700, #FFA500); color: #0d0d0d; border: none; padding: 13px 36px; border-radius: 50px; font-size: 1rem; font-weight: 900; cursor: pointer; font-family: 'Nunito', sans-serif; box-shadow: 0 4px 20px rgba(255,165,0,0.35); transition: all 0.2s; }
     .btn-gold:hover { transform: scale(1.07); }
